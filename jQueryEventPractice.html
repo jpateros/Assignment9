@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>  
+
+    <script>
+        //1. Use the .click() method to display an alert message to the user indicating that the button has been clicked when the button is actually clicked. 
+        $(document).ready(function () {
+            $('#butonID').click(function () {
+                alert('Button clicked!');
+            });
+        });
+
+        // 2. Attach the click event using the .bind() method to display an alert message to the user indicating that the button has been clicked when the button is actually clicked
+        $(document).ready(function () {
+            $('#butonID').bind('click', function () {
+                alert('Button clicked with bind method used (part 2).');
+            });
+        });
+
+        // 3. Attach the click event using the .on() method to display an alert message to the user indicating that the button has been clicked when the button is actually clicked. 
+        $(document).ready(function () {
+            $(document).on('click', '#butonID', function () {
+                alert('Button clicked with on method used (part 3)');
+            });
+        });
+
+        // . Attach the click event to both buttons using a single handler using the .on() method. Again, an alert message should be displayed to the user indicating that a button has been clicked when either of the buttons are actually clicked. 
+        $(document).ready(function () {
+            $(document).on('click', '#button1, #button2', function () {
+                alert('A button from part 4 was clicked');
+            });
+        });
+
+        // 5. Use jQuery to set the div element to 400px wide and 400px high. Attach the click, mouseenter, and mouseleave events using the .on() method. Display an alert message to the user indicating that the div was either clicked on, the mouse entered it, or the mouse left it. 
+        $(document).ready(function () {
+
+            $('#divID').css({
+                'width': '400px',
+                'height': '400px',
+            });
+
+            $('#divID').on('click', function () {
+                alert('Div clicked!');
+            });
+
+            $('#divID').on('mouseenter', function () {
+                alert('Mouse entered the div!');
+            });
+
+            $('#divID').on('mouseleave', function () {
+                alert('Mouse left the div!');
+            });
+        });
+
+        // 6. 6.	Rewrite the code from number 5. This time add a span tag to the web page. 
+        // Display three different messages within the span tag when the user enters the div, leaves the div, or clicks on the div
+        $(document).ready(function () {
+            $('#divIDPart6').css({
+                'width': '400px',
+                'height': '400px',
+            });
+
+            $('#divIDPart6').on('mouseenter', function () {
+                $('#message').text('Yopu entered div from part 6');
+            });
+
+            $('#divIDPart6').on('mouseleave', function () {
+                $('#message').text('You left the div from part 6');
+            });
+
+            $('#divIDPart6').on('click', function () {
+                $('#message').text('You clicked the part 6 div');
+            });
+        });
+
+        // 7. Create a link within the web page and set it’s href attribute to browse to modulemedia.com. When the user clicks the link, first, prevent it from redirecting to that web site. 
+        //Second, programmatically style the link so that its color changes to red. 
+        //Third, display the name of the node that triggered the event within an alert box.
+        $(document).ready(function () {
+            $('#myLink').click(function (event) {
+                
+                event.preventDefault();
+                $(this).css('color', 'red');
+
+                alert('You clicked on a node called: ' + event.target.nodeName);
+            });
+        });
+// 8.Create a div tag within the web page. As the user resizes the browser, display the width and height of the browser window within the div tag
+        $(window).resize(function() {
+            var windowWidth = $(window).width();
+            var windowHeight = $(window).height();
+
+            $('#windowSize').text('Window Width: ' + windowWidth + 'px, Window Height: ' + windowHeight + 'px');
+        });
+
+        $(window).resize();
+
+        // 9.Create a text field using the <input> tag. When the input has focus, set the background to a light gray color. 
+        // When the input does not have focus, reset the background back to a white color.
+        $(document).ready(function() {
+            $('#textInputPArt9').focus(function() {
+                $(this).css('background-color', 'lightgray');
+            });
+
+            $('#textInputPArt9').blur(function() {
+                $(this).css('background-color', 'white');
+            });
+        });
+
+        //10.	Add a form tag within a web page complete with 2 input fields: one that collects name and a second that collects an email. Add a submit button. 
+        //When the user submits the form, if any one of the two fields is left empty, display an alert box to the user indicating that the fields are required. Give the field that the user left empty a red border. 
+        // If both fields have values in them, set their borders to green.
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(event) {
+                event.preventDefault();
+
+                let isValid = true;
+
+                //ensure  name box is not empty
+                if ($('#name').val().trim() == '') {
+                    $('#name').css('border', '2px solid red'); 
+                    isValid = false;
+                } else {
+                    $('#name').css('border', '2px solid green'); 
+                }
+
+                // make sure email is not empty
+                if ($('#email').val().trim() == '') {
+                    $('#email').css('border', '2px solid red'); 
+                    isValid = false;
+                } else {
+                    $('#email').css('border', '2px solid green'); 
+                }
+
+                if (!isValid) {
+                    alert('Both fields are required.');
+                } else {
+                    alert('Form submitted successfully!');
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <button id="butonID">Button Used by Parts 1,2,3</button>  
+
+    <button id="button1">Button 1 (part 4)</button>
+    <button id="button2">Button 2 (part 4)</button>
+
+    <div id="divID">Part 5 Div</div>
+
+    <div id="divIDPart6">
+        <span id="message"></span>
+    </div>
+
+    <a id="myLink" href="http://modulemedia.com">Link for Module Media</a>
+
+    <div id="windowSize">Window Size Div Over Here</div>
+
+    <input type="text" id="textInputPArt9">
+
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Solutions</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="#">Contact Us</a></li>
+    </ul>
+</body>
+
+</html>
